@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 100px;
+            height: 100px;
+            background: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        // 封装滑动事件函数:
+        //     功能分析:1.滑动功能的实现
+        //             2.设定this指向
+        //             3.添加事件对象
+        //             4.再封装一个拖拽事件
+
+        // 1.滑动功能的实现(因为不能是完全的水平或垂直,利用角度,实则是横纵坐标差的大小比较)
+        // 1>确定滑动方向是垂直还是水平
+        // 2>确定是左右还是上下
+        // 3>确定touchmove事件
+        function swipe(el, opations) {
+            // 因为滑动有四个方向,不可能用一个函数完成,更不能传四个函数
+            // 所以选择用对象封装四个函数,或者叫四个方法
+            // 但是如果opations中根本没有对应的函数,那就会报错,所以可以上
+            // if判断,可以用&&符号,也可以在swipe函数中封装一个初始化对象,外部
+            // 有用外部的属性,没有用初始化的替代
+            var startX = 0;
+            var startY = 0;
+            var moveX = 0;
+            var moveY = 0;
+            var disX = 0;
+            var disY = 0;
+            // disX与disY是为了drag函数准备的,为了计算盒子的位置
+            var flag = false;
+            var directions = {
+                swipeLeft : function () {},
+                swipeRight : function () {},
+                swipeTop : function () {},
+                swipeBottom : function () {},
+                drag : function () {}
+            }
+            Object.assign(directions, opations);
+            // Object.assign是个固定写法,assign方法就这么调用
+            // assign可以完成一个浅拷贝,可以将参数2的属性赋值给参数1,若属性为复杂类型,出现属性共用
+            // 这里选择了touchmove事件的坐标而不是touchend的,原因尚不明确
+            el.addEventListener("touchstart", function (e) {
+                startX = e.touches[0].pageX;
+                startY = e.touches[0].pageY;
+                // pageX是触点距离页面左边的距离
+                // offsetLeft是当前盒子距离定位父级的距离,也就是left值
+                // var left = parseInt(box.style.left || getComputedStyle(box).left);
+                // 早期时用上述手段获取left值的,getComputedStyle用来获取css中的left值
+                disX = startX - el.offsetLeft;
+                disY = startY - el.offsetTop;
+                // touches是触摸点的一个集合,不能直接使用e.touches.pageX
+            });
+            el.addEventListener("touchmove", function (e) {
+
+                moveX = e.touches[0].pageX;
+                moveY = e.touches[0].pageY;
+                flag = true;
+                e.info = {
+                    startX : startX,
+                    startY : startY,
+                    disX : disX,
+                    disY : disY
+                }
+                // 封装一个事件函数的属性,属性是对象,用于保存所用到的数值,因为drag函数的作用域不在swipe内
+                // 所以访问不到statX等变量
+                directions.drag.call(el,e);
+                // 拖拽时坐标时时刻刻都在变化,所以在touchmove事件中调用
+
+            });
+            el.addEventListener("touchend", function (e) {
+
+                // 在手指离开屏幕时,开始判定滑动方向
+                var diffX = Math.abs(moveX - startX);
+                var diffY = Math.abs(moveY - startY);
+
+                if (flag) {
+                    if (diffY > diffX) {
+                        if (moveY - startY < 0) {  
+                            // opations.swipe&&opations.swipeTop();
+                            // 若没有初始化对象如果opations.swipe方法存在,再去调用函数,防报错的第2个套路
+                            directions.swipeTop.call(el,e);
+                            
+                        } else {
+                            // opations.swipe&&opations.swipeDown();
+                            directions.swipeBottom(el,e);
+                        }
+                    } else {
+                        if (moveX - startX < 0) {
+                            directions.swipeLeft(el,e);
+                        } else {
+                            directions.swipeRight(el,e);
+                        }
+                    }
+                }
+                flag = false;
+            });
+
+        }
+
+        var html = document.documentElement;
+        var box = document.querySelector("#box");
+
+        swipe(box, {
+            swipeLeft : function () {
+                console.log("向左滑动");
+            },
+            swipeRight : function () {
+                console.log("向右滑动");
+            },
+            drag: function (e) {
+                this.style.left = e.touches[0].pageX - e.info.disX + "px";
+                this.style.top = e.touches[0].pageY - e.info.disY + "px";
+                console.log(this.style.left);
+                console.log(this.style.top);
+            }
+        })
+    </script>
+</body>
+
+</html>
