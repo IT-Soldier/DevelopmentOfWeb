@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!-- 不允许用户去缩放很重要,否则调节到宽度小于320px时,内容并不会被遮挡,而是跟随缩小,横向也不会有导航条出现 -->
+    <!-- 开发者工具显示的盒模型宽度显示320px,但右边会有外边距,我判定还是缩放了,没能维持最小宽度 -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的京东移动端首页</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./js/swiper/css/swiper.min.css">
+    <script src="./js/swiper/js/swiper.min.js"></script>
+</head>
+
+<body>
+    <!-- 移动端布局,常常只分为header,banner,nav,content四个主体部分,各页面略有增删 -->
+    <!-- 移动端布局需要注意的问题:
+        1.viewport必须设置
+        2.移动端常常为2倍屏,图片的设置需要缩小到真实尺寸的一半
+        3.设置内减盒模型 
+        4.多使用h5c3的东西,浏览器为高级浏览器,对h5c3的支持较好-->
+    <div id="container">
+        <!-- container的存在,是为了设置最大,最小宽度,布局居中 -->
+        <div class="wrapper">
+            <!-- wrapper的存在是为了header部分的固定定位,固定定位的元素宽高是直接与浏览器联系的
+                固定定位又是因为页面有效果要求
+            header部分需要居中,而margin: 0 auto;对于绝对定位,固定定位等已经脱标的元素不生效
+            在页面的最后表现上,wrapper依然是整屏的宽度,只是header元素重新设置了最大,最小宽度,
+            以及居中效果 -->
+            <!-- 头部搜索开始 -->
+            <header class="header">
+                <a class="logo" href="javascript:;"></a>
+                <!-- logo设置用a标签,是因为logo一般都是可点击的 -->
+                <form action="">
+                    <a href="javascript:;" class="searchBtn"></a>
+                    <input type="text" class="search">
+                </form>
+                <a class="login" href="javascript:;">登录</a>
+            </header>
+        </div>
+        <!-- 头部搜索结束 -->
+        <!-- Swiper轮播图开始 -->
+        <div class="swiper-container banner">
+            <!-- swiper-container是插件使用的类名,为了不干扰其使用,设置新的类名 -->
+            <div class="swiper-wrapper">
+                <a href="javascript:;" class="swiper-slide">
+                    <img src="./images/l1.jpg" alt="">
+                </a>
+                <a href="javascript:;" class="swiper-slide">
+                    <img src="./images/l2.jpg" alt="">
+                </a>
+                <a href="javascript:;" class="swiper-slide">
+                    <img src="./images/l3.jpg" alt="">
+                </a>
+                <a href="javascript:;" class="swiper-slide">
+                    <img src="./images/l4.jpg" alt="">
+                </a>
+                <a href="javascript:;" class="swiper-slide">
+                    <img src="./images/l5.jpg" alt="">
+                </a>
+                <a href="javascript:;" class="swiper-slide">
+                    <img src="./images/l6.jpg" alt="">
+                </a>
+                <a href="javascript:;" class="swiper-slide">
+                    <img src="./images/l7.jpg" alt="">
+                </a>
+                <a href="javascript:;" class="swiper-slide">
+                    <img src="./images/l8.jpg" alt="">
+                </a>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <!-- 轮播图结束 -->
+        <!-- 导航开始 -->
+        <nav class="nav">
+            <figure>
+                <img src="./images/nav0.png" alt="">
+                <figcaption>分类查询</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/nav1.png" alt="">
+                <figcaption>分类查询</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/nav2.png" alt="">
+                <figcaption>分类查询</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/nav3.png" alt="">
+                <figcaption>分类查询</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/nav4.png" alt="">
+                <figcaption>分类查询</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/nav5.png" alt="">
+                <figcaption>分类查询</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/nav6.png" alt="">
+                <figcaption>分类查询</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/nav7.png" alt="">
+                <figcaption>分类查询</figcaption>
+            </figure>
+
+        </nav>
+        <!-- 导航结束 -->
+        <!-- 内容区开始 -->
+        <main>
+            <!-- 独一无二的主内容区还是应该用main
+            每一个部分的话去使用section -->
+            <section class="content">
+                <div class="secondkill">
+                    <h4 class="title">
+                        <span class="hand">掌上秒杀</span>
+                        <div class="lasttime">
+                            <span>0</span>
+                            <span>0</span>
+                            <span>:</span>
+                            <span>0</span>
+                            <span>0</span>
+                            <span>:</span>
+                            <span>0</span>
+                            <span>0</span>
+                        </div>
+                        <div class="more">更多&gt;</div>
+                    </h4>
+                    <figure>
+                        <img src="./images/detail01.jpg" alt="">
+                        <figcaption>¥10</figcaption>
+                        <figcaption>¥100</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="./images/detail01.jpg" alt="">
+                        <figcaption>¥10</figcaption>
+                        <figcaption>¥100</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="./images/detail01.jpg" alt="">
+                        <figcaption>¥10</figcaption>
+                        <figcaption>¥100</figcaption>
+                    </figure>
+                </div>
+                <div class="market">
+                    <h4 class="title bb">
+                        <span>京东超市</span>    
+                    </h4>
+                    <div class="product">
+                        <!-- 这个地方没有去使用div全部左浮动分完左右,分上下,
+                        而是分别左右浮动,然后元素按上下的默认的排列顺序
+                        其实第二个手法有个缺点,无法处理三个并列的情况比如掌上秒杀部分
+                        我陷入的误区是忘记的元素由上到下的默认排列,执意要div包裹图片
+                        还要写长串的类名,而此处样式大量的是公共样式 -->
+                            <a class="item fl w50 br" href="" src="javascript:;">
+                                <img src="./images/cp1.jpg" alt="">
+                            </a>
+                            <a class="item fr w50 bb" href="" src="javascript:;">
+                                <img src="./images/cp2.jpg" alt="">
+                            </a>
+                            <a class="item fr w50" href="" src="javascript:;">
+                                <img src="./images/cp3.jpg" alt="">
+                            </a>
+                    </div>
+                </div>
+                <div class="market">
+                        <h4 class="title bb">
+                                <span>京东超市</span>    
+                            </h4>
+                            <div class="product">
+                                    <a class="item fl w50 br" href="" src="javascript:;">
+                                        <img src="./images/cp1.jpg" alt="">
+                                    </a>
+                                    <a class="item fr w50 bb" href="" src="javascript:;">
+                                        <img src="./images/cp2.jpg" alt="">
+                                    </a>
+                                    <a class="item fr w50" href="" src="javascript:;">
+                                        <img src="./images/cp3.jpg" alt="">
+                                    </a>
+                            </div>
+                </div>
+                <div class="market">
+                        <h4 class="title bb">
+                                <span>京东超市</span>    
+                            </h4>
+                            <div class="product">
+                                    <a class="item fl w50 br" href="" src="javascript:;">
+                                        <img src="./images/cp1.jpg" alt="">
+                                    </a>
+                                    <a class="item fr w50 bb" href="" src="javascript:;">
+                                        <img src="./images/cp2.jpg" alt="">
+                                    </a>
+                                    <a class="item fr w50" href="" src="javascript:;">
+                                        <img src="./images/cp3.jpg" alt="">
+                                    </a>
+                            </div>
+                </div>
+            </section>
+        </main>
+        <!-- 内容区结束 -->
+    </div>
+
+    <script src="./js/index.js"></script>
+</body>
+
+</html>

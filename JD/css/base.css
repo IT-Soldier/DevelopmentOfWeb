@@ -1,0 +1,293 @@
+* {
+    box-sizing: border-box;
+    /* box-sizing: border-box; */
+}
+body {
+    margin: 0;
+    padding: 0;
+    /* 默认字体较大,统一设置为14px */
+    font-size: 14px;
+    background: #f5f5f5;
+}
+input {
+    padding: 0;
+    border: none;
+    outline: none;
+}
+a {
+    color: #ccc;
+    text-decoration: none;
+}
+figure {
+    margin: 0;
+}
+h4 {
+    margin: 0;
+}
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.w50 {
+    width: 50%;
+}
+.bb {
+    border-bottom: 1px solid #ccc;
+}
+.br {
+    border-right: 1px solid #ccc;
+}
+#container {
+    max-width: 640px;
+    /* 由于手机的屏幕尺寸种类很多,需要页面元素的宽度自适应,使用百分比布局
+    业内均以iphone为标杆,iPhone5的屏幕宽度为320,屏幕又为2倍屏,常拿到的设计稿就是640
+    所以最大宽度为640px,即使要自适应不能无限制放大
+    */
+    /* min-width: 500px; */
+    min-width: 320px;
+    /* 市面上最小的手机屏幕也就是320了,不能再小了 */
+    /* 最小宽度没有生效 */
+    margin: 0 auto;
+    /* 观察到两边留白了 */
+    /* 整个屏幕需要居中,这是移动端基本操作 */
+}
+/* 头部搜索开始 */
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    /* 防止被轮播图遮挡 */
+}
+.header {
+    position: relative;
+    max-width: 640px;
+    min-width: 320px;
+    height: 35px;
+    padding: 0 50px 0 65px;
+    /* 为了限制住搜索框的宽度 */
+    margin: 0 auto;
+}
+
+.header .logo {
+    position: absolute;
+    top: 8px;
+    left: 5px;
+    width: 56px;
+    height: 20px;
+    background: url(../images/sprites.png) no-repeat 0 -109px;
+    /* 精灵图的大小的也得缩小一半,还是因为图片为2倍的原因 */
+    background-size: 200px 200px;
+}
+
+.header .login {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    color: #fff;
+}
+
+.header .search {
+    /* 搜索框自适应的实现的实现依靠百分比去继承父集的宽度 */
+    /* 值得注意的是子级不设宽高或者设置百分比都只能继承父级内容区的宽度 */
+    width: 100%;
+    height: 30px;
+    margin-top: 2px;
+    border-radius: 15px;
+    padding-left: 35px;
+    padding-right: 35px;
+}
+/* 经测试input没有办法插入before,原因应该是input为单标签,不能插入子子元素 */
+/* 而before相当于在元素内插入一个行内标签 */
+/* .header .search::before {
+    display: block;   
+    content: "sdfghasdfghjkjhgfdjkjhgfds";
+} */
+.header form {
+    position: relative;
+    width: 100%;
+}
+/* 不使用下面的方案,任性 */
+/* .header form .searchBtn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: red;
+} */
+
+.header form::before {
+    /* input标签会继承form全部的宽度, */
+    /* 所以即便input是行内块元素,是在此处设置inline-block也不会与input并排显示 */
+    /* 只能使用定位 */
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    /* content: url(); */
+    /* 该方式可以引入图片 */
+    content: "";
+    width: 22px;
+    height: 22px;
+    background: url(../images/sprites.png) no-repeat  -60px -110px;
+    background-size: 200px 200px;
+}
+/* 头部搜索结束 */
+/* 轮播图开始 */
+.banner {
+    width: 100%;
+    
+}
+/* .swiper-container .swiper-slide {
+     a标签应该是在插件的css中被转化为块,
+    此时出现了怪异模式,img元素与父级下边线出现了4像素的空隙 
+    因为图片与父集文字基线对齐
+} */
+.banner img {
+    width: 100%;
+    vertical-align: bottom;
+
+}
+/* 轮播图结束 */
+/* 导航开始 */
+.nav {
+    overflow: hidden;
+    width: 100%;
+    padding-bottom: 10px;
+    background:#fff;
+    border-bottom: 1px solid #ccc;
+}
+.nav figure {
+    float: left;
+    width: 25%;
+    margin-top: 10px;
+    text-align: center;
+    /* 浮动之后,虽然脱标,但依然处在父级元素之内.
+    受到父盒宽高,内边距的约束,可以继承父盒宽度
+    而绝对定位与固定定位,只受到设置固定定位,绝对定位的父级元素的影响
+    继承或百分比也是其的宽度,不受亲爹的内边距影响 */
+}
+.nav img {
+    width: 40px;
+}
+/* 导航结束 */
+/* 内容区开始 */
+.content {
+    width: 100%;
+    padding: 0 10px;
+}
+.secondkill {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    background: #fff;
+    box-shadow: 0 0  2px #ccc;
+    /* 虽然看上去没有阴影偏移,但偏移的值还是要写,写0px呗 */
+    
+}
+.secondkill .title {
+    position: relative;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 10px 0 30px;
+    font-weight: 400;
+}
+.secondkill .title::before {
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    content: "";
+    width: 16px;
+    height: 20px;
+    background: url(../images/seckill-icon.png) no-repeat;
+    background-size: 16px 20px;
+}
+
+.secondkill .title .hand {
+    color: #d8505c;
+}
+.secondkill .lasttime {
+    position: absolute;
+    top: 6px;
+    left: 100px;
+
+}
+.secondkill .lasttime span {
+    float: left;
+    width: 16px;
+    height: 20px;
+    line-height: 20px;
+    margin-left: 2px;
+    background: #000;
+    color: #fff;
+    text-align: center;
+
+}
+.lasttime span:nth-child(3n) {
+    width: 6px;
+    background: #fff;
+    color:#000;
+}
+.secondkill .more {
+    position: absolute;
+    top: 0;
+    right: 10px;
+}
+.secondkill figure {
+    float: left;
+    width: 33.333%;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 12px;
+}
+.secondkill figure:not(:last-child) {
+    /* 排除掉最后一个figure元素 */
+    border-right: #ccc solid 1px;
+    
+}
+.secondkill figure img {
+    width: 70%;
+}
+.secondkill figure figcaption:nth-child(2) {
+    color: #d8505c;
+}
+.secondkill figure figcaption:nth-child(3) {
+    text-decoration: line-through;
+}
+.market {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 10px;
+    background: #fff;
+    box-shadow: 0 0  2px #ccc;
+    /* 虽然看上去没有阴影偏移,但偏移的值还是要写,写0px呗 */
+}
+.market .title {
+  height: 32px;
+  padding-left: 20px;
+  font: 400 14px/32px "microsoft yahei"; 
+} 
+.market .title::before {
+    position: absolute;
+    top: 9px;
+    left: 12px;
+    content: "";
+    width: 4px;
+    height: 14px;
+    background: #d8505c;
+}
+.product img {
+    display: block;
+    /* 解决图片与父级元素底部有空隙的问题 */
+    width: 100%;
+}
+/* 内容区结束 */
