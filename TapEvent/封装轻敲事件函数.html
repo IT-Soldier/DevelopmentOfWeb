@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    
+    <script>
+        // 功能分析:
+        //     1.实现轻敲功能;
+        //     2.添加事件对象(我们自己是没有办法去构建的,需借助已有事件的事件对象)
+        //     3.改变this指向    
+
+        // 1.轻敲功能的实现:(依赖于移动端三大事件函数)
+        //     1>触摸屏幕到离开屏幕的时间小于150ms
+        //     2>不能触发touchmove事件
+        function tap(el, fn) {
+            // 一个函数作为了另一个函数的参数,该函数是回调函数
+            // 需要传入两个参数,第一个触发该事件的元素,第二个要执行的功能
+            // 需要保证第一个参数是元素对象,而不是布尔值或者是其他什么鬼,还需要提醒
+            // 元素的nodeType值是1
+            if (el.nodeType != 1) {
+                //alert("您选择的不是元素对象");
+                // 或者给一个警告
+                console.warn("您选择的不是元素对象");
+                return;
+            }
+            var start = 0;
+            var end = 0;
+            var flag = false;
+            // flag判定是否触发了touchmove事件
+            el.addEventListener("touchstart", function () {
+                // 通过事件监听,其实就是父级元素的事件代理
+                start = new Date().getTime();
+                // 获取时间的毫秒数
+            })
+            el.addEventListener("touchmove", function () {
+                flag = true;
+            })
+            el.addEventListener("touchend", function (e) {
+                // 此处的e是touchend的形参,是事件触发时浏览器传给该函数的
+                // 触摸屏幕到离开屏幕的时间小于150ms
+                end = new Date().getTime();
+                if (flag == false && end - start < 150) {
+                    fn.call(el,e);
+                    // 此处的e既是touchend事件的形参又是回调函数的实参
+                    // 使用call方法改变this的指向,使其由window指向选中的元素
+                }
+                flag = false;
+                // 为了二次触发能生效
+            })
+        }
+        // 由于是整屏幕的点击,选择的元素是html,这是根元素
+        var html = document.documentElement;
+        // 获取html标签的方式有两种,上面一种较为特殊
+        // var html = document.getElementsByTagName("html")[0];
+        tap(html, function (e) {
+            // 回调函数的形参
+            console.log("轻敲功能的实现");
+            console.log(this);
+            console.log(e);
+        });
+    </script>
+</body>
+
+</html>
