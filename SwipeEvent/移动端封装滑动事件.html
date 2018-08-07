@@ -72,6 +72,8 @@
                 moveX = e.touches[0].pageX;
                 moveY = e.touches[0].pageY;
                 flag = true;
+                // 在移动端touch事件中,是没有offsetX这个属性的,所以弃之不用
+                //offsetX是指鼠标指针位置相对于触发事件对象的x坐标
                 e.info = {
                     startX : startX,
                     startY : startY,
